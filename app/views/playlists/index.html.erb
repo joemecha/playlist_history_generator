@@ -1,0 +1,9 @@
+<h1>Playlists</h1>
+
+<%= button_to "Fetch from Music League", scrape_playlists_path, method: :post %>
+
+<ul>
+  <% @playlists.each do |playlist| %>
+    <li>Round <%= playlist.round_number %> - <%= playlist.name || "---" %> – <%= playlist.spotify_url %></li>
+  <% end %>
+</ul>
