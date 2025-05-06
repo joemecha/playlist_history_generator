@@ -1,0 +1,26 @@
+<h1>All Songs</h1>
+
+<%= button_to "Import Songs from Spotify", import_songs_path, method: :post, data: { turbo: false }, class: "btn btn-primary mb-3" %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Artist</th>
+      <th>Album</th>
+      <th>Playlists</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @songs.each do |song| %>
+      <tr>
+        <td><%= song.title %></td>
+        <td><%= song.artist %></td>
+        <td><%= song.album %></td>
+        <td>
+          <%= song.playlist_songs.includes(:playlist).map { |ps| ps.playlist.name }.join(", ") %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
