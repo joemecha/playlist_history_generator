@@ -12,4 +12,13 @@ class PlaylistsController < ApplicationController
 
     redirect_to playlists_path, notice: "Playlists fetched and updated."
   end
+
+  def import_songs
+    playlist = Playlist.find(params[:id])
+    @songs = PlaylistSongImporter.new(playlist).call
+
+    @songs.each do |song_attrs|
+      playlist.songs.find_or_create_by!(spotify_id: song_attrs[:spotify_id])
+    end
+  end
 end

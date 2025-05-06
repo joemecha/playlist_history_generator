@@ -1,3 +1,0 @@
-class PlaylistFetcherService
-  # TODO
-end
