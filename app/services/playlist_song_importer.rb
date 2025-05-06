@@ -3,13 +3,18 @@ class PlaylistSongImporter
     @spotify_client = spotify_client
   end
 
-  def import_all(playlists = Playlist.all)
+  def import_all
+    playlists = Playlist.all
+
+    playlist_songs = PlaylistSong.where(playlist_id: playlists.pluck(:id)).pluck(:playlist_id)
+
     playlists.each do |playlist|
-      next if playlist.playlist_songs.exists?
+      next if playlist_songs.include?(playlist.id)
 
       playlist_id = _extract_playlist_id(playlist.spotify_url)
       tracks_data = @spotify_client.fetch_playlist_tracks(playlist_id)
-      all_tracks = fetch_all_tracks(tracks_data)
+      all_tracks = _fetch_all_tracks(tracks_data)
+
       _create_songs_and_associations(playlist, all_tracks)
     end
   end
@@ -20,29 +25,37 @@ class PlaylistSongImporter
     URI.parse(spotify_url).path.split('/').last
   end
 
-  def fetch_all_tracks(tracks_data)
-    items = tracks_data['items']
-    next_url = tracks_data['next']
+  def _fetch_all_tracks(tracks_data)
+    items = tracks_data.dig('tracks', 'items') || []
 
-    while next_url
-      response = @spotify_client.fetch_url(next_url)
-      items.concat(response['items'])
-      next_url = response['next']
-    end
+    items.map do |item|
+      track_info = item['track']
+      next unless track_info.present?
 
-    items
+      {
+        title: track_info["name"],
+        artist: _extract_primary_artist(track_info),
+        spotify_id: track_info["id"],
+        album_name: track_info.dig("album", "name"),
+        album_art_url: track_info.dig("album", "images", 0, "url"),
+        preview_url: track_info["preview_url"],
+        added_at: item["added_at"]
+      }
+    end.compact
+  end
+
+  def _extract_primary_artist(track_info)
+    artist = track_info["artists"]&.first
+    artist ? artist["name"] : "Unknown Artist"
   end
 
   def _create_songs_and_associations(playlist, tracks)
     tracks.each do |track|
-      track = track['track']
-      next unless track
+      title = track[:title]
+      artist = track[:artist]
+      album = track[:album_name]
 
-      title = track['name']
-      artist = track['artists']&.first&.dig('name')
-      album = track['album']&.dig('name')
-
-      next unless title && artist # TODO: should it skip silently?
+      next unless title && artist
 
       song = Song.find_or_create_by(title:, artist:) do |s|
         s.album = album
