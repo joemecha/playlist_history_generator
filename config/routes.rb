@@ -11,6 +11,10 @@ Rails.application.routes.draw do
   resources :songs, only: [:index] do
     collection do
       post :import
+      get :export_csv
     end
+  end
+
+  resources :stats, only: [:index] do
   end
 end
