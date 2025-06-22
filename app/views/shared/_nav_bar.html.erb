@@ -1,0 +1,18 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Music League</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <%= link_to 'Playlists', playlists_path, class: "nav-link #{'active' if current_page?(playlists_path)}" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Songs', songs_path, class: "nav-link #{'active' if current_page?(songs_path)}" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Stats', stats_path, class: "nav-link #{'active' if current_page?(stats_path)}" %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
