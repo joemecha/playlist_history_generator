@@ -47,4 +47,8 @@ coverage/
 .DS_Store
 .byebug_history
 .env
-
+.dockerignore
+Dockerfile
+log/
+tmp/
+vendor/
