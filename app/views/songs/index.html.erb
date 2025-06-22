@@ -1,9 +1,32 @@
+<%= render 'shared/nav_bar' %>
+
 <h1>All Songs</h1>
 
 <%= button_to "Import Songs from Spotify", import_songs_path, method: :post, data: { turbo: false }, class: "btn btn-primary mb-3" %>
 
-<table class="table">
-  <thead>
+<br>
+
+<%= link_to "Export CSV", export_csv_songs_path, class: "btn btn-info mb-3" %>
+
+<br>
+
+<div class="mb-3">
+  <p><strong>Total Songs:</strong> <%= @total_songs %></p>
+  <p><strong>Total Artists:</strong> <%= @total_artists %></p>
+  <p><strong>Songs on Multiple Playlists:</strong> <%= "#{@songs_on_multiple_playlists} (#{((@songs_on_multiple_playlists.to_f/@total_songs.to_f)*100).round(2)}%)"%></p>
+
+  <p><strong>Most Frequent Song(s):</strong></p>
+  <ul>
+    <% @most_frequent_songs.each do |song| %>
+      <li><%= "#{song.title} by #{song.artist}" %> (<%= song.playlist_songs.size %> playlists)</li>
+    <% end %>
+  </ul>
+</div>
+
+<br>
+
+<table class="table table-bordered table-hover table-sm">
+  <thead class="thead-light sticky-top bg-white" style="z-index: 1">
     <tr>
       <th>Title</th>
       <th>Artist</th>
@@ -14,11 +37,11 @@
   <tbody>
     <% @songs.each do |song| %>
       <tr>
-        <td><%= song.title %></td>
+        <td class="text-wrap text-break" style="max-width: 1000px;"><%= song.title %></td>
         <td><%= song.artist %></td>
-        <td><%= song.album %></td>
+        <td class="text-wrap text-break" style="max-width: 1000px;"><%= song.album %></td>
         <td>
-          <%= song.playlist_songs.includes(:playlist).map { |ps| ps.playlist.name }.join(", ") %>
+          <%= song.playlist_songs.includes(:playlist).map { |ps| "Round #{ps.playlist.round_number} (#{ps.playlist.name})"}.join(", ") %>
         </td>
       </tr>
     <% end %>
