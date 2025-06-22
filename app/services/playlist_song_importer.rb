@@ -14,6 +14,8 @@ class PlaylistSongImporter
       playlist_id = _extract_playlist_id(playlist.spotify_url)
       tracks_data = @spotify_client.fetch_playlist_tracks(playlist_id)
       all_tracks = _fetch_all_tracks(tracks_data)
+      first_added_at = all_tracks.min_by { |t| t[:added_at] }&.[](:added_at)
+      playlist.update(spotify_created_at: first_added_at)
 
       _create_songs_and_associations(playlist, all_tracks)
     end
