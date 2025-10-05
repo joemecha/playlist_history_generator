@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
+  resources :leagues, only: [:index]
+
   resources :playlists, only: [:index] do
     collection do
       post :scrape
