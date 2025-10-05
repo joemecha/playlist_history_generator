@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_08_021845) do
+ActiveRecord::Schema[7.1].define(version: 2025_10_05_162749) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "leagues", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "music_league_id"
+    t.string "url"
+    t.index ["music_league_id"], name: "index_leagues_on_music_league_id", unique: true
+  end
 
   create_table "playlist_songs", force: :cascade do |t|
     t.bigint "playlist_id", null: false
@@ -31,6 +40,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_08_021845) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "spotify_created_at"
+    t.bigint "league_id", null: false
+    t.index ["league_id"], name: "index_playlists_on_league_id"
   end
 
   create_table "songs", force: :cascade do |t|
@@ -44,4 +55,5 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_08_021845) do
 
   add_foreign_key "playlist_songs", "playlists"
   add_foreign_key "playlist_songs", "songs"
+  add_foreign_key "playlists", "leagues"
 end
