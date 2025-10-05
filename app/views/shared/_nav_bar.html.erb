@@ -4,6 +4,9 @@
     <div class="collapse navbar-collapse">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
+          <%= link_to 'Leagues', leagues_path, class: "nav-link #{'active' if current_page?(leagues_path)}" %>
+        </li>
+        <li class="nav-item">
           <%= link_to 'Playlists', playlists_path, class: "nav-link #{'active' if current_page?(playlists_path)}" %>
         </li>
         <li class="nav-item">
