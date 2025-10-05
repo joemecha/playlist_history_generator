@@ -2,6 +2,8 @@
 
 A Ruby on Rails app that signs into [Music League](https://app.musicleague.com), retrieves Spotify playlists for each round, and stores song and playlist data locally. The app provides searchable, sortable views of songs and playlists, export capability, as well as insights and statistics about artist and song choices.
 
+The app now supports multiple leagues, with each playlist belonging to a league.
+
 ---
 
 ## Table of Contents
@@ -32,6 +34,7 @@ TBD
 
 ## Database Schema
 
+- **Leagues**: store Spotify metadata, and creation date; has many playlists
 - **Playlists**: store Spotify metadata, Music League round number, and creation date
 - **Songs**: unique by title and artist; includes album name
 - **PlaylistSongs**: join table representing which songs appeared in which playlists
