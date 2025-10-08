@@ -2,7 +2,10 @@ class PlaylistsController < ApplicationController
   before_action :set_league, only: [:scrape]
 
   def index
-    @playlists = Playlist.all.order(round_number: :desc)
+    @playlists = Playlist.all
+                         .includes(:league)
+                         .joins(:league)
+                         .order('leagues.created_at DESC, playlists.round_number DESC')
   end
 
   def scrape

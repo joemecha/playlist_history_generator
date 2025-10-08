@@ -9,6 +9,7 @@
 <table class="table table-bordered table-hover table-sm">
   <thead class="thead-light sticky-top bg-white" style="z-index: 1">
     <tr>
+      <th>League</th>
       <th>Round</th>
       <th>Name</th>
       <th>Created At</th>
@@ -17,6 +18,7 @@
   <tbody>
     <% @playlists.each do |playlist| %>
       <tr>
+        <td><%= playlist.league.name %></td>
         <td><%= playlist.round_number %></td>
         <td><%= playlist.name %></td>
         <td><%= playlist.spotify_created_at&.strftime("%Y-%m-%d") %></td>

@@ -1,6 +1,7 @@
 class SongsController < ApplicationController
   def index
-    @songs = Song.includes(playlist_songs: :playlist).order(:title)
+    @songs = Song.includes(playlist_songs: { playlist: :league })
+                 .order(:artist, :title)
     @total_songs = @songs.count
     @total_artists = @songs.select(:artist).distinct.count
     @songs_on_multiple_playlists = @songs.select { |song| song.playlist_songs.size > 1 }.count

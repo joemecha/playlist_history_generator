@@ -31,7 +31,7 @@
       <th>Title</th>
       <th>Artist</th>
       <th>Album</th>
-      <th>Playlists</th>
+      <th>Leagues/Rounds</th>
     </tr>
   </thead>
   <tbody>
@@ -41,7 +41,13 @@
         <td><%= song.artist %></td>
         <td class="text-wrap text-break" style="max-width: 1000px;"><%= song.album %></td>
         <td>
-          <%= song.playlist_songs.includes(:playlist).map { |ps| "Round #{ps.playlist.round_number} (#{ps.playlist.name})"}.join(", ") %>
+
+          <% grouped_by_league = song.playlist_songs.includes(playlist: :league).group_by { |ps| ps.playlist.league } %>
+
+          <% grouped_by_league.each do |league, ps_list| %>
+            <em><%= league.name %>:</em>
+            <%= ps_list.map { |ps| "Round #{ps.playlist.round_number} #{ps.playlist.name}" }.join(", ") %><br>
+          <% end %>
         </td>
       </tr>
     <% end %>
