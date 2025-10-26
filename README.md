@@ -71,4 +71,8 @@ rails server
 
 ## TODO List
 
-- Automate Music League login process to avoid depending on session cookies that expire
+[X] Add devise, authorize user check, sign in/up, logout functionality
+[X] Add annotate gem and generate schema comments for all models
+[ ] Update user with admin field, begin using policies to control visibility and functionality of data scraping
+[ ] Decide how to handle secrets safely
+[ ] deploy app to host
