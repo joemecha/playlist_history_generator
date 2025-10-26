@@ -17,15 +17,34 @@
         </li>
       </ul>
 
-      <div class="d-flex">
-        <% if user_signed_in? %>
-          Logged in as <strong><%= current_user.email %></strong>
-          <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-outline-light btn-sm", form: { class: "d-inline" } %>
-        <% else %>
-          <%= link_to "Login", new_user_session_path, class: "btn btn-outline-light btn-sm me-2" %>
-          <%= link_to "Sign up", new_user_registration_path, class: "btn btn-outline-light btn-sm" if Rails.application.routes.url_helpers.respond_to?(:new_user_registration_path) %>
-        <% end %>
-      </div>
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <% if user_signed_in? %>
+              <%= current_user.email %>
+            <% else %>
+              Account
+            <% end %>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <% if user_signed_in? %>
+              <li><%= link_to "Edit Profile", edit_user_registration_path, class: "dropdown-item" %></li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <%= button_to "Logout", destroy_user_session_path,
+                      method: :delete,
+                      form_class: "d-inline",
+                      class: "dropdown-item" %>
+              </li>
+
+
+            <% else %>
+              <li><%= link_to "Login", new_user_session_path, class: "dropdown-item" %></li>
+              <li><%= link_to "Sign Up", new_user_registration_path, class: "dropdown-item" %></li>
+            <% end %>
+          </ul>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>
