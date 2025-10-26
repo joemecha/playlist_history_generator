@@ -24,10 +24,5 @@ module PlaylistHistoryGenerator
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     # Automatically annotate models after migrations
-    config.after_initialize do
-      require 'annotate'
-      Annotate.load_tasks
-      AnnotateTask.new.invoke('models')
-    end
   end
 end
