@@ -19,7 +19,16 @@
         <td><%= playlist.league.name %></td>
         <td><%= playlist.round_number %></td>
         <td><%= playlist.name %></td>
-        <td><%= playlist.spotify_created_at&.strftime("%Y-%m-%d") %></td>
+        <td>
+          <% if playlist.spotify_created_at.present? %>
+            <%= playlist.spotify_created_at.strftime("%Y-%m-%d") %>
+          <% else %>
+            <%= button_to "Update", update_spotify_created_at_playlist_path(playlist),
+                          method: :patch,
+                          form_class: "d-inline",
+                          class: "btn btn-sm btn-outline-primary" %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

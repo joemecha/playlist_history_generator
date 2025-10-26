@@ -10,6 +10,9 @@ Rails.application.routes.draw do
       post :scrape
       post :import_songs
     end
+    member do
+     patch :update_spotify_created_at
+    end
   end
 
   resources :songs, only: [:index] do
