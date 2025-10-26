@@ -9,6 +9,7 @@ gem "importmap-rails"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
 
+gem 'devise'
 gem 'dotenv-rails'
 gem 'faraday'
 gem 'nokogiri' # HTML parser
