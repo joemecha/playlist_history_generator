@@ -25,6 +25,8 @@ class PlaylistsController < ApplicationController
   end
 
   def scrape
+    authorize Playlist, :scrape?
+
     urls_with_rounds = MusicLeagueScraperService.new.call
 
     urls_with_rounds.each do |playlist_data|

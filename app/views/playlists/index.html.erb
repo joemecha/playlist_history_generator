@@ -1,6 +1,8 @@
 <h1>Playlists</h1>
 
-<%= button_to "Fetch from Music League", scrape_playlists_path, method: :post %>
+<% if policy(Playlist).scrape? %>
+  <%= button_to "Fetch from Music League", scrape_playlists_path, method: :post %>
+<% end %>
 
 <br>
 
@@ -23,10 +25,12 @@
           <% if playlist.spotify_created_at.present? %>
             <%= playlist.spotify_created_at.strftime("%Y-%m-%d") %>
           <% else %>
-            <%= button_to "Update", update_spotify_created_at_playlist_path(playlist),
-                          method: :patch,
-                          form_class: "d-inline",
-                          class: "btn btn-sm btn-outline-primary" %>
+            <% if policy(playlist).update? %>
+              <%= button_to "Update", update_spotify_created_at_playlist_path(playlist),
+                            method: :patch,
+                            form_class: "d-inline",
+                            class: "btn btn-sm btn-outline-primary" %>
+            <% end %>
           <% end %>
         </td>
       </tr>
