@@ -13,11 +13,12 @@ gem 'devise'
 gem 'dotenv-rails'
 gem 'faraday'
 gem 'nokogiri' # HTML parser
+gem 'pundit'
 
 gem 'sprockets-rails'
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
-# gem "turbo-rails"
+gem "turbo-rails"
 
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 # gem "stimulus-rails"
@@ -33,7 +34,6 @@ gem 'sprockets-rails'
 
 group :development, :test do
   gem 'rspec-rails'
-  # gem 'capybara' # TODO: add when needed
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'pry'
@@ -49,6 +49,8 @@ group :development do
 end
 
 group :test do
+# add if/when needed
+  # gem 'capybara'
   # gem 'selenium-webdriver'
 end
 
