@@ -5,7 +5,7 @@ ruby "3.2.2"
 gem "rails", "~> 7.1.5", ">= 7.1.5.1"
 gem "pg"
 gem "puma", ">= 5.0"
-gem "importmap-rails"
+gem "importmap-rails", "~> 2.2.2"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
 
