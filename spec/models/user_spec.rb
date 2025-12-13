@@ -22,5 +22,50 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "Music League authorization" do
+    let(:authorized_id) { "b1f91a91222d4996b3675463f7e9864c" }
+    let(:unauthorized_id) { "00000000000000000000000000000000" }
+
+    before do
+      # Stub the credentials to include one authorized ID
+      allow(Rails.application.credentials).to receive(:dig)
+        .with(:music_league, :authorized_ids)
+        .and_return([authorized_id])
+    end
+
+    it "allows creation of a user with an authorized ID" do
+      user = User.new(
+        email: "authorized@example.com",
+        password: "password123",
+        password_confirmation: "password123",
+        music_league_user_id: authorized_id
+      )
+      expect(user).to be_valid
+    end
+
+    it "prevents creation of a user with an unauthorized ID" do
+      user = User.new(
+        email: "unauthorized@example.com",
+        password: "password123",
+        password_confirmation: "password123",
+        music_league_user_id: unauthorized_id
+      )
+      expect(user).not_to be_valid
+      expect(user.errors[:music_league_user_id]).to include(
+        "is not authorized to create an account."
+      )
+    end
+
+    it "fails if music_league_user_id is nil" do
+      user = User.new(
+        email: "no_id@example.com",
+        password: "password123",
+        password_confirmation: "password123"
+      )
+      expect(user).not_to be_valid
+      expect(user.errors[:music_league_user_id]).to include(
+        "can't be blank"
+      )
+    end
+  end
 end

@@ -35,10 +35,6 @@ class Admin::LeaguesController < Admin::BaseController
 
   private
 
-  def require_admin
-    redirect_to root_path, alert: "Not authorized" unless current_user.admin?
-  end
-
   def set_league
     @league = League.find(params[:id])
   end

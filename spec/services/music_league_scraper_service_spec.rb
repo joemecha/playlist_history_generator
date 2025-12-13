@@ -13,8 +13,10 @@ RSpec.describe MusicLeagueScraperService do
     it 'extracts Spotify playlist URLs from the page' do
       result = scraper.call
 
-      expect(result).to all(include("open.spotify.com/playlist"))
-      expect(result).to include("https://open.spotify.com/playlist/12345")
+      expect(result.map { |p| p[:url] }).to contain_exactly(
+        "https://open.spotify.com/playlist/12345",
+        "https://open.spotify.com/playlist/67890"
+      )
       expect(result.size).to be > 0
     end
   end

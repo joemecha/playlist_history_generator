@@ -18,9 +18,19 @@
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_music_league_user_id  (music_league_user_id)
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
-#
+
+authorized_id = Rails.application.credentials.dig(:music_league, :authorized_ids).first
+
 FactoryBot.define do
   factory :user do
-    
+    sequence(:email) { |n| "user#{n}@example.com" }
+    password { "password123" }
+    password_confirmation { "password123" }
+    music_league_user_id { authorized_id }
+    admin { false }
+
+    trait :admin do
+      admin { true }
+    end
   end
 end

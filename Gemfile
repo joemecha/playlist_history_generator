@@ -49,6 +49,7 @@ group :development do
 end
 
 group :test do
+  gem 'webmock'
 # add if/when needed
   # gem 'capybara'
   # gem 'selenium-webdriver'
