@@ -30,7 +30,8 @@ class User < ApplicationRecord
 
   validates :music_league_user_id,
             presence: true,
-            format: { with: /\A[a-f0-9]{32}\z/i }
+            format: { with: /\A[a-f0-9]{32}\z/i },
+            unless: :demo_music_league_id?
 
   validate :must_be_authorized_music_league_user, on: :create
 
@@ -42,5 +43,10 @@ class User < ApplicationRecord
     unless valid_ids.include?(music_league_user_id)
       errors.add(:music_league_user_id, "is not authorized to create an account.")
     end
+  end
+
+  def demo_music_league_id?
+    demo_id = Rails.application.credentials.dig(:demo_user, :music_league_user_id)
+    demo_id.present? && music_league_user_id == demo_id
   end
 end
