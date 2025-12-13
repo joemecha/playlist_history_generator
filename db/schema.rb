@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_10_26_212222) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_11_172104) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "league_memberships", force: :cascade do |t|
+    t.bigint "league_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["league_id"], name: "index_league_memberships_on_league_id"
+    t.index ["user_id"], name: "index_league_memberships_on_user_id"
+  end
 
   create_table "leagues", force: :cascade do |t|
     t.string "name"
@@ -62,10 +71,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_26_212222) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "admin", default: false, null: false
+    t.string "music_league_user_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["music_league_user_id"], name: "index_users_on_music_league_user_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "league_memberships", "leagues"
+  add_foreign_key "league_memberships", "users"
   add_foreign_key "playlist_songs", "playlists"
   add_foreign_key "playlist_songs", "songs"
   add_foreign_key "playlists", "leagues"
