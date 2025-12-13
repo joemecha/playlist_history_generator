@@ -1,0 +1,18 @@
+<%= form_with(model: [:admin, @league], local: true) do |f| %>
+  <div class="mb-3">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :music_league_id, "Music League ID" %>
+    <%= f.text_field :music_league_id, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :url %>
+    <%= f.url_field :url, class: "form-control" %>
+  </div>
+
+  <%= f.submit class: "btn btn-primary" %>
+<% end %>

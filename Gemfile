@@ -5,18 +5,20 @@ ruby "3.2.2"
 gem "rails", "~> 7.1.5", ">= 7.1.5.1"
 gem "pg"
 gem "puma", ">= 5.0"
-gem "importmap-rails"
+gem "importmap-rails", "~> 2.2.2"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
 
+gem 'devise'
 gem 'dotenv-rails'
 gem 'faraday'
 gem 'nokogiri' # HTML parser
+gem 'pundit'
 
 gem 'sprockets-rails'
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
-# gem "turbo-rails"
+gem "turbo-rails"
 
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 # gem "stimulus-rails"
@@ -32,7 +34,6 @@ gem 'sprockets-rails'
 
 group :development, :test do
   gem 'rspec-rails'
-  # gem 'capybara' # TODO: add when needed
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'pry'
@@ -43,9 +44,14 @@ group :development, :test do
 end
 
 group :development do
+  gem "annotate", "~> 3.2"
   gem "web-console"
 end
 
 group :test do
+  gem 'webmock'
+# add if/when needed
+  # gem 'capybara'
   # gem 'selenium-webdriver'
 end
+

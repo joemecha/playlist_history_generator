@@ -1,0 +1,26 @@
+<%= render "admin/shared/nav" %>
+
+<h1>Users</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Music League ID</th>
+      <th>Admin?</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.email %></td>
+        <td><%= user.music_league_user_id %></td>
+        <td><%= user.admin? %></td>
+        <td>
+          <%= link_to "Toggle Admin", toggle_admin_admin_user_path(user), method: :patch, class: "btn btn-sm btn-primary" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

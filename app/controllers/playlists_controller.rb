@@ -8,7 +8,25 @@ class PlaylistsController < ApplicationController
                          .order('leagues.created_at DESC, playlists.round_number DESC')
   end
 
+  def update_spotify_created_at
+    playlist = Playlist.find(params[:id])
+
+    playlist_id = playlist.spotify_url.match(/playlist\/([^?]+)/)[1]
+    tracks_data = SpotifyClient.new.fetch_playlist_tracks(playlist_id)
+    all_tracks = tracks_data.flat_map { |t| t[:tracks] || [] } rescue []
+    first_added_at = all_tracks.min_by { |t| t[:added_at] }&.[](:added_at)
+
+    if first_added_at.present?
+      playlist.update(spotify_created_at: first_added_at)
+      redirect_to playlists_path, notice: "Spotify created_at updated for #{playlist.name}"
+    else
+      redirect_to playlists_path, alert: "Could not determine created_at for #{playlist.name}"
+    end
+  end
+
   def scrape
+    authorize Playlist, :scrape?
+
     urls_with_rounds = MusicLeagueScraperService.new.call
 
     urls_with_rounds.each do |playlist_data|

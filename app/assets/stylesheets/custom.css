@@ -1,0 +1,84 @@
+:root {
+  /* Bootstrap theme */
+  --brand-primary: #9e00c4;
+  --bs-primary: #9e00c4;
+  --bs-primary-rgb: 158, 0, 196;
+
+  /* Bootstrap buttons */
+  --bs-btn-bg: var(--bs-primary);
+  --bs-btn-border-color: var(--bs-primary);
+  --bs-btn-hover-bg: #8700a8;
+  --bs-btn-hover-border-color: #8700a8;
+  --bs-btn-active-bg: #730090;
+  --bs-btn-active-border-color: #730090;
+
+  /* Override navbar link colors */
+  --bs-nav-link-color: #9e00c4;
+}
+
+/* Force primary buttons */
+.btn-primary {
+  --bs-btn-bg: #9e00c4;
+  --bs-btn-border-color: #9e00c4;
+  --bs-btn-hover-bg: #8700a8;
+  --bs-btn-hover-border-color: #8700a8;
+  --bs-btn-active-bg: #730090;
+  --bs-btn-active-border-color: #730090;
+}
+
+
+.navbar {
+  background-color: var(--brand-primary);
+}
+
+.navbar .navbar-brand,
+.navbar .nav-link,
+.navbar .dropdown-toggle {
+  color: #ffffff;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link:focus,
+.navbar .dropdown-item:hover {
+  color: #ffffff;
+  opacity: 0.9;
+}
+
+.navbar .dropdown-menu {
+  background-color: #ffffff;
+}
+
+.navbar .dropdown-item {
+  color: #212529;
+}
+
+.navbar .dropdown-item:hover {
+  background-color: rgba(158, 0, 196, 0.1);
+}
+
+.navbar .nav-link.active {
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.nav-pills {
+  --bs-nav-pills-link-active-bg: #9e00c4;
+  --bs-nav-pills-link-active-color: #ffffff;
+}
+
+/* Default link color */
+a {
+  color: var(--bs-primary);
+  text-decoration: none;
+}
+
+/* Hover / focus state */
+a:hover,
+a:focus {
+  color: #7a008f;
+  text-decoration: underline;
+}
+
+.nav-link {
+  color: var(--brand-primary);
+}

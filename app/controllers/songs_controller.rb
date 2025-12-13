@@ -11,6 +11,8 @@ class SongsController < ApplicationController
   end
 
   def import
+    authorize Song, :import?
+
     PlaylistSongImporter.new.import_all
     redirect_to songs_path, notice: "Songs imported successfully."
   end

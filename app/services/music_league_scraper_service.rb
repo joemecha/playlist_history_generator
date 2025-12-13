@@ -9,7 +9,7 @@ class MusicLeagueScraperService
   end
 
   def call
-    # NOTE: will not work without cookie (automate login later)
+    # NOTE: will not work without valid cookie (automate login later)
     response = Faraday.get(@url) do |req|
       req.headers['Cookie'] = ENV["MUSIC_LEAGUE_COOKIE"]
     end
