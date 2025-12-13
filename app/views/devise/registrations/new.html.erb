@@ -9,6 +9,13 @@
   </div>
 
   <div class="field">
+    <%= f.label :music_league_user_id, "Music League User ID" %><br />
+    <%= f.text_field :music_league_user_id,
+          autofocus: true,
+          autocomplete: "off" %>
+  </div>
+
+  <div class="field">
     <%= f.label :password %>
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>

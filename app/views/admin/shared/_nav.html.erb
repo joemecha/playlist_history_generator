@@ -1,0 +1,15 @@
+<nav class="mb-4">
+  <ul class="nav nav-pills">
+    <li class="nav-item">
+      <%= link_to "Users",
+          admin_users_path,
+          class: "nav-link #{'active' if controller_name == 'users'}" %>
+    </li>
+
+    <li class="nav-item">
+      <%= link_to "Leagues",
+          admin_leagues_path,
+          class: "nav-link #{'active' if controller_name == 'leagues'}" %>
+    </li>
+  </ul>
+</nav>

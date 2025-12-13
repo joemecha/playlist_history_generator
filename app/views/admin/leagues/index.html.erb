@@ -1,0 +1,30 @@
+<%= render "admin/shared/nav" %>
+
+<h1>Leagues</h1>
+<%= link_to "Add New League", new_admin_league_path, class: "btn btn-primary mb-3" %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Music League ID</th>
+      <th>URL</th>
+      <th>Created At</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @leagues.each do |league| %>
+      <tr>
+        <td><%= league.name %></td>
+        <td><%= league.music_league_id %></td>
+        <td><%= league.url %></td>
+        <td><%= league.created_at.strftime("%Y-%m-%d") %></td>
+        <td>
+          <%= link_to "Edit", edit_admin_league_path(league), class: "btn btn-sm btn-primary" %>
+          <%= link_to "Delete", admin_league_path(league), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

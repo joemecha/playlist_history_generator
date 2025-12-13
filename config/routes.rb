@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
+
   root to: "playlists#index"
   get "up" => "rails/health#show", as: :rails_health_check
 
@@ -23,5 +24,12 @@ Rails.application.routes.draw do
   end
 
   resources :stats, only: [:index] do
+  end
+
+  namespace :admin do
+    resources :leagues
+    resources :users, only: [:index] do
+      patch :toggle_admin, on: :member
+    end
   end
 end
