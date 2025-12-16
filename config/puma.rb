@@ -5,7 +5,8 @@
 # Puma can serve each request in a thread from an internal thread pool.
 # Keep this low for free tiers of Render and Supabase
 max_threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }
-threads max_threads_count
+min_threads_count = 5
+threads min_threads_count, max_threads_count
 
 rails_env = ENV.fetch("RAILS_ENV") { "production" }
 
