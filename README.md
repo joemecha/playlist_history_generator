@@ -32,17 +32,34 @@ TBD
 
 ---
 
-## Database Schema
+## Architecture
 
-- **Leagues**: store Spotify metadata, and creation date; has many playlists
-- **Playlists**: store Spotify metadata, Music League round number, and creation date
-- **Songs**: unique by title and artist; includes album name
-- **PlaylistSongs**: join table representing which songs appeared in which playlists
+- **Rails app**
+  - Handles authentication, data ingestion, and persistence
+  - Renders the UI and exposes internal service objects for imports
 
-<!-- Optionally insert schema diagram here -->
-<!-- ![Schema](./path_to_schema.png) -->
+- **PostgreSQL**
+  - Primary data store for leagues, playlists, rounds, songs, and artists
 
----
+- **Spotify API**
+  - Used to authenticate users and retrieve playlist and track metadata
+
+- **Music League**
+  - Source of league and playlist URLs
+  - Playlist metadata is extracted from league pages
+
+### Data Flow
+
+1. User authenticates via Spotify
+2. The application identifies leagues and associated playlists
+3. Playlist tracks are fetched from Spotify
+4. Normalized song and artist data is persisted
+5. Historical playlist data can be exported or analyzed
+
+### Hosting
+
+- **Web application:** Render
+- **Database:** Supabase (PostgreSQL)
 
 ## Areas of Focus
 
@@ -59,12 +76,34 @@ To run this project locally:
 
 You will need Spotify Developer credentials and a URL for your personal Music League league. See `.env.example` for these variables and needed values. The need for a current Music League cookie will be eliminated once the app has been updated with the ability to use Spotify to log in.
 
+### Prequisites
+
+- Ruby
+- Bundler
+- PostgreSQL
+- Spotify developer account
+
+reate a local environment configuration using the variables documented in `.env.example`.
+
+At minimum, you will need:
+
+- Spotify client credentials
+- A Music League league URL
+- A valid Music League session cookie (temporary requirement)
+
+> Note: The requirement for a Music League session cookie is temporary and will be removed once Spotify-based authentication is fully implemented.
+
+### Rails App Setup
+
 ```bash
 git clone git@github.com:joemecha/playlist_history_generator.git
 cd playlist_history_generator
+
 bundle install
+
 rails db:create
 rails db:migrate
+
 rails server
 ```
 ---
@@ -74,6 +113,7 @@ rails server
 [X] Add devise, authorize user check, sign in/up, logout functionality
 [X] Add annotate gem and generate schema comments for all models
 [X] Update user with admin field, begin using policies to control visibility and functionality of data scraping
-[ ] Restrict registration to members of the current league
-[ ] Decide how to handle secrets safely
-[ ] deploy app to host
+[X] Restrict registration to members of the current league
+[X] Decide how to handle secrets safely
+[X] deploy app to host
+[ ] Improve load times (e.g. playlist and song index pages)

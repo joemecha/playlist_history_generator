@@ -22,5 +22,4 @@ test:
   database: playlist_history_generator_test
 
 production:
-  <<: *default
-  database: playlist_history_generator_prod
+  url: <%= ENV["DATABASE_URL"] %>
