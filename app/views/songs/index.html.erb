@@ -35,21 +35,10 @@
     </tr>
   </thead>
   <tbody>
-    <% @songs.each do |song| %>
-      <tr>
-        <td class="text-wrap text-break" style="max-width: 1000px;"><%= song.title %></td>
-        <td><%= song.artist %></td>
-        <td class="text-wrap text-break" style="max-width: 1000px;"><%= song.album %></td>
-        <td>
-
-          <% grouped_by_league = song.playlist_songs.includes(playlist: :league).group_by { |ps| ps.playlist.league } %>
-
-          <% grouped_by_league.each do |league, ps_list| %>
-            <em><%= league.name %>:</em>
-            <%= ps_list.map { |ps| "Round #{ps.playlist.round_number} #{ps.playlist.name}" }.join(", ") %><br>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
+    <%= render partial: "song", collection: @songs, as: :song %>
   </tbody>
 </table>
+
+<div class="d-flex justify-content-center my-4">
+  <%= paginate @songs %>
+</div>

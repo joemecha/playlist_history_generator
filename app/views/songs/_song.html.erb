@@ -1,0 +1,11 @@
+<tr>
+  <td class="text-wrap text-break" style="max-width: 1000px;"><%= song.title %></td>
+  <td><%= song.artist %></td>
+  <td class="text-wrap text-break" style="max-width: 1000px;"><%= song.album %></td>
+  <td>
+    <% song.playlist_songs_by_league.each do |league, ps_list| %>
+      <em><%= league.name %>:</em>
+      <%= ps_list.map { |ps| "Round #{ps.playlist.round_number} #{ps.playlist.name}" }.join(", ") %><br>
+    <% end %>
+  </td>
+</tr>

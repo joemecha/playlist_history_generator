@@ -2,6 +2,8 @@ class SongsController < ApplicationController
   def index
     @songs = Song.includes(playlist_songs: { playlist: :league })
                  .order(:artist, :title)
+                 .page(params[:page])
+                 .per(100)
                  
     # Stats
     @total_songs = Song.count
@@ -10,6 +12,8 @@ class SongsController < ApplicationController
                                                .having('COUNT(*) > 1')
                                                .count
                                                .size
+
+    playlist_counts = PlaylistSong.group(:song_id).count
     max_count = playlist_counts.values.max || 0
     most_frequent_song_ids = PlaylistSong.group(:song_id)
                                          .having('COUNT(*) = ?', max_count)

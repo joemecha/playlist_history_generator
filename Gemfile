@@ -12,6 +12,7 @@ gem "bootsnap", require: false
 gem 'devise'
 gem 'dotenv-rails'
 gem 'faraday'
+gem 'kaminari'
 gem 'nokogiri' # HTML parser
 gem 'pundit'
 
