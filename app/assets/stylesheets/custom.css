@@ -79,6 +79,44 @@ a:focus {
   text-decoration: underline;
 }
 
-.nav-link {
+.nav-link .page-link {
   color: var(--brand-primary);
+}
+
+/* app/assets/stylesheets/pagination.css */
+
+.pagination .page-item {
+  background-color: #9e00d4;
+}
+
+.pagination .page-link {
+  color: #9e00d4;
+}
+
+.pagination .page-link:hover {
+  color: #730090;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #9e00d4;
+  border-color: #9e00d4;
+  color: #ffffff;
+}
+
+.search-outline {
+  border: 3px solid #730090;
+  border-radius: 0.375rem; /* matches Bootstrap */
+}
+
+.search-outline .form-control,
+.search-outline .btn {
+  border: none;
+}
+
+.search-outline:focus-within {
+  box-shadow: 0 0 0 0.25rem rgba(42, 91, 215, 0.25);
+}
+
+.search-outline .btn {
+  border-radius: 0;
 }

@@ -25,6 +25,22 @@
 
 <br>
 
+<div class="mb-3">
+  <%= form_with url: songs_path, method: :get, local: true do |f| %>
+    <div class="input-group search-outline">
+      <%= f.text_field :q,
+            value: @query,
+            placeholder: "Search by title, artist, or album",
+            class: "form-control" %>
+      <button class="btn btn-primary" type="submit">
+        Search
+      </button>
+    </div>
+  <% end %>
+</div>
+
+<br>
+
 <table class="table table-bordered table-hover table-sm">
   <thead class="thead-light sticky-top bg-white" style="z-index: 1">
     <tr>
