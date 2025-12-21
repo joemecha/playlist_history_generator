@@ -18,6 +18,5 @@ FactoryBot.define do
     title { "MyString" }
     artist { "MyString" }
     album { "MyString" }
-    playlist { nil }
   end
 end

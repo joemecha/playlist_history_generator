@@ -31,6 +31,11 @@ RSpec.describe User, type: :model do
       allow(Rails.application.credentials).to receive(:dig)
         .with(:music_league, :authorized_ids)
         .and_return([authorized_id])
+      
+      # Stub the check for demo user
+      allow(Rails.application.credentials).to receive(:dig)
+        .with(:demo_user, :music_league_user_id)
+        .and_return(nil)
     end
 
     it "allows creation of a user with an authorized ID" do
