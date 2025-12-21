@@ -4,7 +4,7 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def toggle_admin
-    user = Userfind(params[:id])
+    user = User.find(params[:id])
     user.update(admin: !user.admin)
     redirect_to admin_users_path, notice: "User updated."
   end

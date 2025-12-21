@@ -43,18 +43,22 @@ class PlaylistsController < ApplicationController
 
   def import_songs
     playlist = Playlist.find(params[:id])
-    @songs = PlaylistSongImporter.new(playlist).call
-
-    @songs.each do |song_attrs|
-      playlist.songs.find_or_create_by!(spotify_id: song_attrs[:spotify_id])
+    imported_tracks = PlaylistSongImporter.new.call(playlist)
+    
+    imported_tracks.each do |track_attrs|
+      song = Song.find_or_create_by!(title: track_attrs[:title], artist: track_attrs[:artist]) do |s|
+        s.album = track_attrs[:album_name] if track_attrs[:album_name]
+      end
+      
+      PlaylistSong.find_or_create_by!(playlist: playlist, song: song)
     end
+
+    redirect_to playlists_path, notice: "Songs imported successfully."
   end
 
   private
 
   def set_league
-    @league = League.last
-    # TODO: when routes have been updated to nest playlists under league change the line above to
-    # @league = League.find_by(params[:league_id])
+    @league = League.last # Set to current league
   end
 end

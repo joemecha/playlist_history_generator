@@ -12,7 +12,12 @@ rails_env = ENV.fetch("RAILS_ENV") { "production" }
 
 port ENV.fetch("PORT") { 3000 }
 
-workers Integer(ENV.fetch("WEB_CONCURRENCY") { 1 })
+if Rails.env.production?
+  workers ENV.fetch("WEB_CONCURRENCY", 1)
+else
+  workers 0
+end
+
 
 preload_app!
 

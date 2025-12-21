@@ -1,19 +1,37 @@
 class SongsController < ApplicationController
   def index
-    @songs = Song.includes(playlist_songs: { playlist: :league })
-                 .order(:artist, :title)
-    @total_songs = @songs.count
-    @total_artists = @songs.select(:artist).distinct.count
-    @songs_on_multiple_playlists = @songs.select { |song| song.playlist_songs.size > 1 }.count
+    @query = params[:q]
 
-    max_count = @songs.map { |song| song.playlist_songs.size }.max
-    @most_frequent_songs = @songs.select { |song| song.playlist_songs.size == max_count }
+    base_scope = Song.includes(playlist_songs: { playlist: :league })
+                 .order(:artist, :title)
+
+    @songs = base_scope
+      .search(@query)
+      .page(params[:page])
+      .per(50)
+
+    # Stats
+    @total_songs = Song.count
+    @total_artists = Song.distinct.count(:artist)
+    @songs_on_multiple_playlists = PlaylistSong.group(:song_id)
+                                               .having('COUNT(*) > 1')
+                                               .count
+                                               .size
+
+    playlist_counts = PlaylistSong.group(:song_id).count
+    max_count = playlist_counts.values.max || 0
+    most_frequent_song_ids = PlaylistSong.group(:song_id)
+                                         .having('COUNT(*) = ?', max_count)
+                                         .pluck(:song_id)
+    @most_frequent_songs = Song.includes(playlist_songs: { playlist: :league })
+                               .where(id: most_frequent_song_ids)
+                               .order(:artist, :title)
   end
 
   def import
     authorize Song, :import?
 
-    PlaylistSongImporter.new.import_all
+    PlaylistSongImporter.call
     redirect_to songs_path, notice: "Songs imported successfully."
   end
 

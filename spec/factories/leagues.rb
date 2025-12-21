@@ -15,8 +15,8 @@
 #
 FactoryBot.define do
   factory :league do
-    name { "MyString" }
-    music_league_id { "123abc" }
-    url { "www.example.com/music_league"}
+    sequence(:music_league_id) { |n| "ml_#{n}"}
+    name { "League #{music_league_id}" }
+    url { "www.example.com/music_league/l/#{music_league_id}"}
   end
 end

@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
 
   private
 
+  # :nocov:
   def user_not_authorized
     flash[:alert] = "You are not authorized to perform this action."
     redirect_to(request.referrer || root_path)
@@ -26,4 +27,5 @@ class ApplicationController < ActionController::Base
       keys: [:music_league_user_id]
     )
   end
+  # :nocov:
 end

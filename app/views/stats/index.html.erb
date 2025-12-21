@@ -13,41 +13,48 @@
   <li><strong>Songs on Multiple Playlists:</strong> <%= @songs_on_multiple_playlists %></li>
 </ul>
 
-<h2>Most Frequent Artists</h2>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Artist</th>
-      <th>Number of Songs</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @most_frequent_artists.each do |artist, count| %>
-      <tr>
-        <td><%= artist.presence || "(Unknown Artist)" %></td>
-        <td><%= count %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="row mb-4">
+  <div class="col-12 col-lg-6">
+    <h2>Most Frequent Artists</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Artist</th>
+          <th>Number of Songs</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @most_frequent_artists.each do |artist, count| %>
+          <tr>
+            <td><%= artist.presence || "(Unknown Artist)" %></td>
+            <td><%= count %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 
-<h2>Repeated Songs</h2>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Artist</th>
-      <th>Playlist Count</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @repeated_songs.each do |song| %>
-      <tr>
-        <td><%= song.title %></td>
-        <td><%= song.artist %></td>
-        <td><%= @repeated_counts[song.id] %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <div class="col-12 col-lg-6">
+    <h2>Repeated Songs</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Artist</th>
+          <th>Playlist Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @repeated_songs.each do |song| %>
+          <tr>
+            <td><%= song.title %></td>
+            <td><%= song.artist %></td>
+            <td><%= @repeated_counts[song.id] %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
 

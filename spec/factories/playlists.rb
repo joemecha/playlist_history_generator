@@ -21,7 +21,11 @@
 #
 FactoryBot.define do
   factory :playlist do
-    name { "MyString" }
-    spotify_url { "MyString" }
+    association :league
+
+    sequence(:name) { |n| "Playlist #{n}" }
+    sequence(:round_number)
+    spotify_created_at { nil }
+    sequence(:spotify_url) { |n| "https://example.com/playlist/#{n}" }
   end
 end

@@ -3,25 +3,39 @@ class PlaylistSongImporter
     @spotify_client = spotify_client
   end
 
-  def import_all
-    playlists = Playlist.all
-
-    playlist_songs = PlaylistSong.where(playlist_id: playlists.pluck(:id)).pluck(:playlist_id)
-
-    playlists.each do |playlist|
-      next if playlist_songs.include?(playlist.id)
-
-      playlist_id = _extract_playlist_id(playlist.spotify_url)
-      tracks_data = @spotify_client.fetch_playlist_tracks(playlist_id)
-      all_tracks = _fetch_all_tracks(tracks_data)
-      first_added_at = all_tracks.min_by { |t| t[:added_at] }&.[](:added_at)
-      playlist.update(spotify_created_at: first_added_at)
-
-      _create_songs_and_associations(playlist, all_tracks)
+  def call(playlist = nil)
+    if playlist
+      _import_playlist(playlist)
+    else
+      _import_all_playlists
     end
   end
 
+  def self.call(playlist = nil)
+    new.call(playlist)
+  end
+
   private
+
+  attr_reader :spotify_client
+
+  def _import_all_playlists
+    Playlist.find_each do |playlist|
+      _import_playlist(playlist)
+    end
+  end
+
+  def _import_playlist(playlist)
+    playlist_id = _extract_playlist_id(playlist.spotify_url)
+    tracks_data = spotify_client.fetch_playlist_tracks(playlist_id)
+    tracks = _fetch_all_tracks(tracks_data)
+
+    playlist.update(
+      spotify_created_at: tracks.min_by { |t| t[:added_at] }&.[](:added_at)
+    )
+
+    _create_songs_and_associations(playlist, tracks)
+  end
 
   def _extract_playlist_id(spotify_url)
     URI.parse(spotify_url).path.split('/').last
@@ -31,36 +45,31 @@ class PlaylistSongImporter
     items = tracks_data.dig('tracks', 'items') || []
 
     items.map do |item|
-      track_info = item['track']
-      next unless track_info.present?
+      track = item['track']
+      next unless track.present?
 
       {
-        title: track_info["name"],
-        artist: _extract_primary_artist(track_info),
-        spotify_id: track_info["id"],
-        album_name: track_info.dig("album", "name"),
-        album_art_url: track_info.dig("album", "images", 0, "url"),
-        preview_url: track_info["preview_url"],
+        title: track["name"],
+        artist: _extract_primary_artist(track),
+        spotify_id: track["id"],
+        album_name: track.dig("album", "name"),
+        album_art_url: track.dig("album", "images", 0, "url"),
+        preview_url: track["preview_url"],
         added_at: item["added_at"]
       }
-    end.compact
+    end
   end
 
-  def _extract_primary_artist(track_info)
-    artist = track_info["artists"]&.first
-    artist ? artist["name"] : "Unknown Artist"
+  def _extract_primary_artist(track)
+    track["artists"]&.first&.dig("name") || "Unknown Artist"
   end
 
   def _create_songs_and_associations(playlist, tracks)
     tracks.each do |track|
-      title = track[:title]
-      artist = track[:artist]
-      album = track[:album_name]
+      next unless track[:title] && track[:artist]
 
-      next unless title && artist
-
-      song = Song.find_or_create_by(title:, artist:) do |s|
-        s.album = album
+      song = Song.find_or_create_by(title: track[:title], artist: track[:artist]) do |s|
+        s.album = track[:album_name]
       end
 
       PlaylistSong.find_or_create_by(playlist:, song:)
