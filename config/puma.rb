@@ -12,7 +12,7 @@ rails_env = ENV.fetch("RAILS_ENV") { "production" }
 
 port ENV.fetch("PORT") { 3000 }
 
-if Rails.env.production?
+if rails_env == "production"
   workers ENV.fetch("WEB_CONCURRENCY", 1)
 else
   workers 0
