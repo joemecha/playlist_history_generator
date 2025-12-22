@@ -28,7 +28,11 @@ Since the app is not currently hosted anywhere, CSV exporting was added to be ab
 
 ## Live Link
 
-TBD
+### https://playlist-history-generator.onrender.com/
+
+### Demo User credentials
+  email: demo@example.com
+  password: demo-password-123
 
 ---
 
