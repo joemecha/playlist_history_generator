@@ -1,8 +1,20 @@
-<nav class="navbar navbar-expand-lg bg-primary mb-4">
+<nav class="navbar navbar-expand-md bg-primary mb-4">
   <div class="container-fluid">
     <span class="navbar-brand">ML Playlist History</span>
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#mainNavbar"
+      aria-controls="mainNavbar"
+      aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNavbar">
+      <ul class="navbar-nav me-auto mb-2 mb-md-0">
         <li class="nav-item">
           <%= link_to 'Leagues', leagues_path, class: "nav-link #{'active' if current_page?(leagues_path)}" %>
         </li>
