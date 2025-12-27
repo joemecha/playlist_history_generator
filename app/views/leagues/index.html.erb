@@ -1,26 +1,28 @@
 <h1>Leagues</h1>
 
-<table class="table table-striped table-bordered">
-  <thead class="table-light sticky-top">
-    <tr>
-      <th scope="col">Name</th>
-      <th scope="col">URL</th>
-      <th scope="col">Created At</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @leagues.each do |league| %>
+<div class="table-responsive">
+  <table class="table table-striped table-bordered">
+    <thead class="table-light sticky-top">
       <tr>
-        <td><%= league.name %></td>
-        <td>
-          <% if (safe_url = safe_external_url(league.url)) %>
-            <%= link_to safe_url, safe_url, target: "_blank", rel: "noopener noreferrer" %>
-          <% else %>
-            N/A
-          <% end %>
-        </td>
-        <td><%= league.created_at.strftime("%b %-d, %Y") %></td>
+        <th scope="col">Name</th>
+        <th scope="col">URL</th>
+        <th class="d-none d-md-table-cell" scope="col">Created At</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @leagues.each do |league| %>
+        <tr>
+          <td><%= league.name %></td>
+          <td>
+            <% if (safe_url = safe_external_url(league.url)) %>
+              <%= link_to safe_url, safe_url, target: "_blank", rel: "noopener noreferrer" %>
+            <% else %>
+              N/A
+            <% end %>
+          </td>
+          <td class="d-none d-md-table-cell"><%= league.created_at.strftime("%b %-d, %Y") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

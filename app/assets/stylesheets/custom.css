@@ -66,6 +66,10 @@
   --bs-nav-pills-link-active-color: #ffffff;
 }
 
+.navlink {
+  padding: 0.75rem 1rem;
+}
+
 /* Default link color */
 a {
   color: var(--bs-primary);
@@ -119,4 +123,16 @@ a:focus {
 
 .search-outline .btn {
   border-radius: 0;
+}
+
+/* mobile-friendly */
+.stats-table {
+  font-size: 0.9rem;
+}
+
+/* tablet or larger screen */
+@media (min-width: 768px) {
+  .stats-table {
+    font-size: 1rem;
+  }
 }

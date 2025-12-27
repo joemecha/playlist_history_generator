@@ -6,35 +6,37 @@
 
 <br>
 
-<table class="table table-bordered table-hover table-sm">
-  <thead class="thead-light sticky-top bg-white" style="z-index: 1">
-    <tr>
-      <th>League</th>
-      <th>Round</th>
-      <th>Name</th>
-      <th>Created At</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @playlists.each do |playlist| %>
+<div class="table-responsive">
+  <table class="table table-bordered table-hover table-sm">
+    <thead class="thead-light sticky-top bg-white" style="z-index: 1">
       <tr>
-        <td><%= playlist.league.name %></td>
-        <td><%= playlist.round_number %></td>
-        <td><%= playlist.name %></td>
-        <td>
-          <% if playlist.spotify_created_at.present? %>
-            <%= playlist.spotify_created_at.strftime("%Y-%m-%d") %>
-          <% else %>
-            <% if policy(playlist).update? %>
-              <%= button_to "Update", update_spotify_created_at_playlist_path(playlist),
-                            method: :patch,
-                            form_class: "d-inline",
-                            class: "btn btn-sm btn-outline-primary" %>
-            <% end %>
-          <% end %>
-        </td>
+        <th>League</th>
+        <th>Round</th>
+        <th>Name</th>
+        <th class="d-none d-md-table-cell">Created At</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @playlists.each do |playlist| %>
+        <tr>
+          <td><%= playlist.league.name %></td>
+          <td><%= playlist.round_number %></td>
+          <td><%= playlist.name %></td>
+          <td class="d-none d-md-table-cell">
+            <% if playlist.spotify_created_at.present? %>
+              <%= playlist.spotify_created_at.strftime("%Y-%m-%d") %>
+            <% else %>
+              <% if policy(playlist).update? %>
+                <%= button_to "Update", update_spotify_created_at_playlist_path(playlist),
+                              method: :patch,
+                              form_class: "d-inline",
+                              class: "btn btn-sm btn-outline-primary" %>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 

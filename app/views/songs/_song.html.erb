@@ -1,7 +1,7 @@
 <tr>
   <td class="text-wrap text-break" style="max-width: 1000px;"><%= song.title %></td>
   <td><%= song.artist %></td>
-  <td class="text-wrap text-break" style="max-width: 1000px;"><%= song.album %></td>
+  <td class="d-none d-md-table-cell text-wrap text-break" style="max-width: 1000px;"><%= song.album %></td>
   <td>
     <% song.playlist_songs_by_league.each do |league, ps_list| %>
       <em><%= league.name %>:</em>

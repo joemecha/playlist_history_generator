@@ -41,19 +41,21 @@
 
 <br>
 
-<table class="table table-bordered table-hover table-sm">
-  <thead class="thead-light sticky-top bg-white" style="z-index: 1">
-    <tr>
-      <th>Title</th>
-      <th>Artist</th>
-      <th>Album</th>
-      <th>Leagues/Rounds</th>
-    </tr>
-  </thead>
-  <tbody>
-    <%= render partial: "song", collection: @songs, as: :song %>
-  </tbody>
-</table>
+<div class="table-responsive">
+  <table class="table table-bordered table-hover table-sm">
+    <thead class="thead-light sticky-top bg-white" style="z-index: 1">
+      <tr>
+        <th>Title</th>
+        <th>Artist</th>
+        <th class="d-none d-md-table-cell">Album</th>
+        <th>Leagues/Rounds</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render partial: "song", collection: @songs, as: :song %>
+    </tbody>
+  </table>
+</div>
 
 <div class="d-flex justify-content-center my-4">
   <%= paginate @songs %>
