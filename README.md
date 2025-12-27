@@ -30,6 +30,8 @@ Since the app is not currently hosted anywhere, CSV exporting was added to be ab
 
 ### https://playlist-history-generator.onrender.com/
 
+Note: the app is slow to spin up on Render
+
 ### Demo User credentials
   email: demo@example.com
   password: demo-password-123
@@ -120,4 +122,6 @@ rails server
 [X] Restrict registration to members of the current league
 [X] Decide how to handle secrets safely
 [X] deploy app to host
-[ ] Improve load times (e.g. playlist and song index pages)
+[X] Improve load times (e.g. playlist and song index pages)
+[X] Add search
+[X] Improve display for small/mobile screens
