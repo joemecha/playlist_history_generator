@@ -37,7 +37,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'faker'
-  gem 'pry'
+  gem "annotate", "~> 3.2"
   gem 'shoulda-matchers'
   gem 'simplecov'
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -45,7 +45,6 @@ group :development, :test do
 end
 
 group :development do
-  gem "annotate", "~> 3.2"
   gem 'brakeman', require: false
   gem "web-console"
 end
