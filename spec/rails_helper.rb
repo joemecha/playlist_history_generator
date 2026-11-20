@@ -1,3 +1,5 @@
+ENV["DISABLE_BOOTSNAP_COMPILE_CACHE"] = "1"
+
 require 'simplecov'
 SimpleCov.start do
   add_filter "/spec/"

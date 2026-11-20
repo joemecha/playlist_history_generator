@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "3.2.2"
+ruby "3.4.13"
 
 gem "rails", "~> 7.2.2", ">= 7.2.2.2"
 gem "pg"
@@ -9,6 +9,7 @@ gem "importmap-rails", "~> 2.2.2"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
 
+gem "csv"
 gem 'devise'
 gem 'dotenv-rails'
 gem 'faraday'
